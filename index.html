@@ -1,25 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Tank Trouble 2</title>
-    <script src="ruffle/ruffle.js"></script>
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            font-family: sans-serif;
-        }
-        .game-container {
-            margin-top: 50px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Tank Trouble 2</title>
+  <!-- 1) Ruffle kütüphanesini yükle -->
+  <script src="ruffle/ruffle.js"></script>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    #game-container {
+      display: inline-block;
+      border: 3px solid #444;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Tank Trouble 2</h1>
-    <div class="game-container">
-        <embed src="Tank Trouble 2.swf" width="800" height="600" />
-    </div>
+  <h1>Tank Trouble 2</h1>
+  <!-- 2) SWF oyununu yerleştireceğimiz alan -->
+  <div id="game-container"></div>
+
+  <!-- 3) SWF dosyalarını Ruffle ile yükle -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Ruffle kütüphanesini al
+      const ruffle = window.RufflePlayer.newest();
+      const container = document.getElementById("game-container");
+
+      // 3a) Ana oyun SWF dosyasını yükleyelim
+      const mainPlayer = ruffle.createPlayer();
+      container.appendChild(mainPlayer);
+      mainPlayer.load("assets/TankTrouble_v4.0.swf");
+
+      // 3b) Diğer yan SWF dosyalarını yükleyelim
+      const swfs = [
+        "assets/Crate.swf",
+        "assets/GameTank.swf",
+        "assets/Laika.swf",
+        "assets/Tank.swf"
+      ];
+      
+      // Yan SWF dosyalarını sırayla yükleyelim
+      swfs.forEach(path => {
+        const p = ruffle.createPlayer();
+        container.appendChild(p);
+        p.load(path);
+      });
+    });
+  </script>
 </body>
 </html>
